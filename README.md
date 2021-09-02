@@ -7,7 +7,7 @@
               K = Key
               P = Plain text in the matrix Form
 
-        * Example: 
+        * Example (Using 3 * 3 Matrix): 
             (c1, c2, c3) = (p1, p2, p3)*(Key Matrix) mod 26
 
 # How to do decryption
