@@ -16,11 +16,12 @@ class Encryption:
         while len(self.message) % 3 != 0:
             self.message += 'x'
 
-        while len(self.key) != 6:
-            self.key += 'x'
+        while len(self.key) != 9:
+            if len(self.key) > 9:
+                self.key -= 'x'
+            else:
+                self.key += 'x'
 
-        print(len(self.key))
-        print(len(self.message))
         self.hillCifer(self.message, self.key)
 
         print("Ciphertext: ", "".join(self.cipherText))
