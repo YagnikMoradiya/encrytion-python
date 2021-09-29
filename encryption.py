@@ -1,67 +1,54 @@
+from utils import create_matrix_of_integers_from_string, make_key, keyGenerator
+
+
 class Encryption:
-    message = input("Enter a string: ")
-    key = input("Enter a key: ")
+    def encryptString(self, msg):
 
-    # Here i made 3 * 3 list with 0 value
-    keyMatrix = [[0] * 3 for i in range(3)]
+        msg = msg.replace(" ", "")
 
-    # 1 * 3 list for message matrix
-    msgMatrix = [[0] for i in range(3)]
+        C = make_key()
 
-    cipMatrix = [[0] for i in range(len(message))]
+        len_check = len(msg) % 2 == 0
+        if not len_check:
+            msg += "0"
 
-    cipherText = []
+        P = create_matrix_of_integers_from_string(msg)
 
-    def fun(self):
-        while len(self.message) % 3 != 0:
-            self.message += 'x'
+        msg_len = int(len(msg) / 2)
 
-        while len(self.key) != 9:
-            if len(self.key) > 9:
-                self.key -= 'x'
-            else:
-                self.key += 'x'
+        encrypted_msg = ""
+        for i in range(msg_len):
+            row_0 = P[0][i] * C[0][0] + P[1][i] * C[0][1]
 
-        self.hillCifer(self.message, self.key)
+            integer = int(row_0 % 26 + 65)
 
-        print("Ciphertext: ", "".join(self.cipherText))
+            encrypted_msg += chr(integer)
 
-    def hillCifer(self, message, key):
-        if len(key) < 6 or len(message.strip()) == 0:
-            return
+            row_1 = P[0][i] * C[1][0] + P[1][i] * C[1][1]
+            integer = int(row_1 % 26 + 65)
+            encrypted_msg += chr(integer)
+        return encrypted_msg
 
-        # To get a keyMatrix
-        self.getKeyMatrix(key)
+    def encryptFile(self, file):
+        try:
+            key = keyGenerator()
+            with open(file, "r") as input:
+                with open("encrypted.txt", "w") as output:
+                    for line in input:
+                        for c in line:
+                            i = ord(c)
+                            if i != 13 and i != 32:
+                                # 13 for new line.
+                                # 32 for space.
+                                i = i + int(key[3])
+                                if i == 13:
+                                    i = i - int(key[3])
 
-        # Fill the data of msgMatrix
-        for i in range(0, len(message), 3):
-            for j in range(3):
-                self.msgMatrix[j][0] = ord(message[j+i]) % 65
+                            output.write(chr(i))
 
-            # Encrypt the text and store into cipMatrix
-            self.encryptText(self.msgMatrix)
-
-            # Get the text from cipMatrix and push into cipherText
-            for i in range(len(self.msgMatrix)):
-                self.cipherText.append(chr(self.cipMatrix[i][0] + 65))
-
-    def getKeyMatrix(self, key):
-        x = 0
-        for i in range(3):
-            for j in range(3):
-                self.keyMatrix[i][j] = ord(key[x]) % 65
-                x += 1
-
-    def encryptText(self, vector):
-        for i in range(3):
-            for j in range(1):
-                self.cipMatrix[i][j] = 0
-                for k in range(3):
-                    self.cipMatrix[i][j] += (vector[k]
-                                             [j] * self.keyMatrix[i][k])
-                    self.cipMatrix[i][j] = self.cipMatrix[i][j] % 26
-
-
-encryption = Encryption()
-
-encryption.fun()
+            output.close()
+            input.close()
+            print("Key is 🔑🔑 :", key)
+            print("\nEncrypted File is at 📃🔒:", output.name)
+        except Exception as e:
+            print("Error:", e)
