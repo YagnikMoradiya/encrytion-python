@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 
-def find_multiplicative_inverse(determinant):
+def find_inverse(determinant):
     multiplicative_inverse = -1
     for i in range(26):
         inverse = determinant * i
@@ -13,15 +13,14 @@ def find_multiplicative_inverse(determinant):
 
 
 def make_key():
-    # Make sure cipher determinant is relatively prime to 26 and only a/A - z/Z are given
     determinant = 0
     C = None
     while True:
         cipher = input("Input 4 letter cipher: ")
-        C = create_matrix_of_integers_from_string(cipher)
+        C = create_matrix(cipher)
         determinant = C[0][0] * C[1][1] - C[0][1] * C[1][0]
         determinant = determinant % 26
-        inverse_element = find_multiplicative_inverse(determinant)
+        inverse_element = find_inverse(determinant)
         if inverse_element == -1:
             print("Determinant is not relatively prime to 26, uninvertible key")
         elif np.amax(C) > 26 and np.amin(C) < 0:
@@ -32,8 +31,7 @@ def make_key():
     return C
 
 
-def create_matrix_of_integers_from_string(string):
-    # Map string to a list of integers a/A <-> 0, b/B <-> 1 ... z/Z <-> 25
+def create_matrix(string):
     integers = [chr_to_int(c) for c in string]
     length = len(integers)
     M = np.zeros((2, int(length / 2)), dtype=np.int32)

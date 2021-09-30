@@ -1,4 +1,4 @@
-from utils import create_matrix_of_integers_from_string, find_multiplicative_inverse, make_key
+from utils import create_matrix, find_inverse, make_key
 
 
 class Decryption:
@@ -9,7 +9,7 @@ class Decryption:
         # Inverse matrix
         determinant = C[0][0] * C[1][1] - C[0][1] * C[1][0]
         determinant = determinant % 26
-        multiplicative_inverse = find_multiplicative_inverse(determinant)
+        multiplicative_inverse = find_inverse(determinant)
         C_inverse = C
         # Swap a <-> d
         C_inverse[0][0], C_inverse[1][1] = C_inverse[1, 1], C_inverse[0, 0]
@@ -21,7 +21,7 @@ class Decryption:
                 C_inverse[row][column] *= multiplicative_inverse
                 C_inverse[row][column] = C_inverse[row][column] % 26
 
-        P = create_matrix_of_integers_from_string(encrypted_msg)
+        P = create_matrix(encrypted_msg)
         msg_len = int(len(encrypted_msg) / 2)
         decrypted_msg = ""
         for i in range(msg_len):

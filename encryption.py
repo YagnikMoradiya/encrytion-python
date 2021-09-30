@@ -1,4 +1,4 @@
-from utils import create_matrix_of_integers_from_string, make_key, keyGenerator
+from utils import create_matrix, make_key, keyGenerator
 
 
 class Encryption:
@@ -12,7 +12,7 @@ class Encryption:
         if not len_check:
             msg += "0"
 
-        P = create_matrix_of_integers_from_string(msg)
+        P = create_matrix(msg)
 
         msg_len = int(len(msg) / 2)
 

@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
         if opt == 1:
             while True:
-                print("\n\n******** You Have Chosen Encryption 🔒🔒 ********\n")
+                print("\n\n******** Encryption 🔒🔒 ********\n")
                 print("Choose the Option: ")
                 print("1). String Encryption")
                 print("2). File Encryption")
@@ -28,13 +28,13 @@ if __name__ == "__main__":
                     print("\nEncrypted Message 🔒🔒: ", encrypted_msg, "\n\n")
                 elif n == 2:
                     enc = Encryption()
-                    filePath = input("Enter File Path 📃:").strip()
+                    filePath = input("Enter File Path 📃: ").strip()
                     enc.encryptFile(filePath)
                 else:
                     break
         elif opt == 2:
             while True:
-                print("\n\n******** You Have Chosen Decryption 🔑🔑 ********\n")
+                print("\n\n******** Decryption 🔑🔑 ********\n")
                 print("Choose the Option: ")
                 print("1). String Decryption")
                 print("2). File Decryption")
@@ -48,7 +48,7 @@ if __name__ == "__main__":
                     print("\nDecrypted Message 🔑🔑: ", decrypted_msg, "\n\n")
                 elif n == 2:
                     dec = Decryption()
-                    filePath = input("Enter File Path 📃:").strip()
+                    filePath = input("Enter File Path 📃: ").strip()
                     dec.decryptFile(filePath)
                 else:
                     break
